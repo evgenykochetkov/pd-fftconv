@@ -9,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
 
-include(${CMAKE_SOURCE_DIR}/pd.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/pd.cmake)
 
 
 if(APPLE)
@@ -22,3 +22,7 @@ add_subdirectory(FFTConvolver)
 pd_add_external(fftconv~ src/fftconv~.cpp)
 target_link_libraries(fftconv_tilde PRIVATE FFTConvolver)
 
+
+add_library(pd-fftconv STATIC src/fftconv~.cpp)
+target_include_directories(pd-fftconv PRIVATE ${PD_SOURCES_PATH})
+target_link_libraries(pd-fftconv PRIVATE FFTConvolver)
